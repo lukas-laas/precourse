@@ -11,6 +11,14 @@ const fileNameOfUrl = url => {
     return fileName;
 }
 
+const getFileContentOr404 = (fileName) => {
+    if (!fs.existsSync(`./static/${fileName}`)) {
+        fileName = "404.html"
+    }
+
+    return fs.readFileSync(`./static/${fileName}`, 'utf-8')
+}
+
 const server = http.createServer((req, res) => {
     console.log(`The URL for the request was '${req.url}'`);
     console.log(`The Method for the request was '${req.method}'`);
@@ -21,7 +29,7 @@ const server = http.createServer((req, res) => {
         res.end("")
         return;
     }
-    const content = fs.readFileSync(`./static/${fileName}`, "utf-8")
+    const content = getFileContentOr404(fileName)
     res.statusCode = 200
     res.setHeader("Content-Type", "text/html")
     res.end(content)
