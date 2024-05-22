@@ -1,5 +1,9 @@
 const express = require("express");
+const cors = require('cors')
 const app = express()
+
+app.use(express.json())
+app.use(cors())
 
 const db = [
     {
@@ -14,7 +18,6 @@ const db = [
     }
 ]
 
-app.use(express.json())
 
 app.get("/api/developers", (req, res) => {
     res.json(db)
