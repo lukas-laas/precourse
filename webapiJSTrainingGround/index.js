@@ -36,6 +36,21 @@ app.post('/api/developers/', (req, res) => {
 
 })
 
+app.delete('/api/developers/:id', (req, res) => {
+    const id = req.params.id
+    console.log(id)
+
+    for (let i = 0; i < db.length; i++) {
+        if (id == db[i].id) {
+            db.splice(i, 1)
+            console.log(db)
+            res.status(200).end()
+        }
+    }
+    res.status(404).end()
+
+})
+
 const port = 3000
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/`);
