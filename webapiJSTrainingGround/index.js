@@ -36,6 +36,19 @@ app.post('/api/developers/', (req, res) => {
 
 })
 
+app.patch('/api/developers/:id', (req, res) => {
+    const i = db.findIndex(x => x.id == req.params.id)
+    if (i == -1) res.status(404).end()
+
+    db[i].name = req.body.name
+    db[i].email = req.body.email
+
+    res
+        .status(201)
+        .setHeader('location', `/api/developers/${req.params.id}`)
+        .json(db[i])
+})
+
 app.delete('/api/developers/:id', (req, res) => {
     const id = req.params.id
     console.log(id)
