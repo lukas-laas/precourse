@@ -40,11 +40,11 @@ app.patch('/api/developers/:id', (req, res) => {
     const i = db.findIndex(x => x.id == req.params.id)
     if (i == -1) res.status(404).end()
 
-    db[i].name = req.body.name
-    db[i].email = req.body.email
+    req.body.name ? db[i].name = req.body.name : res.status(400).end()
+    req.body.email ? db[i].email = req.body.email : res.status(400).end()
 
     res
-        .status(201)
+        .status(200)
         .setHeader('location', `/api/developers/${req.params.id}`)
         .json(db[i])
 })
