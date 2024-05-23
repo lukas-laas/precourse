@@ -9,27 +9,29 @@
         async function getContent() {
             const res = await fetch("http://localhost:3000/api/developers/")
             const content = await res.json()
-            console.log(content)
 
-            const mainContent = document.getElementById("main")
+            const developerList = document.getElementById("developerList")
+            developerList.innerHTML = ""
 
-            mainContent.innerHTML = content.map(x => `<p>${x.name} ${x.email}<p/>`).join('')
+            content.forEach(element => {
+                const listItem = document.createElement("li")
+                listItem.innerHTML = `${element.name}, ${element.email}`
+                developerList.appendChild(listItem)
+            });
         }
 
         async function updateDevelopers() {
-            console.log("klick!")
             const nameInput = document.getElementById("name").value
             const emailInput = document.getElementById("email").value
             const formData = JSON.stringify({ "name": nameInput, "email": emailInput })
-            console.log(formData)
             const res = await fetch("http://localhost:3000/api/developers/", {
                 method: "POST", headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }, body: formData
             })
-            const mainContent = document.getElementById("main")
-            mainContent.innerHTML = ""
+
+            //TODO: clear text input
             getContent()
         }
     </script>
@@ -37,7 +39,8 @@
 
 <body>
     <h1>hej</h1>
-    <main id="main">
+    <main>
+        <ul id="developerList"></ul>
     </main>
     <form action="Add developer">
         <input type="text" name="name" id="name">
