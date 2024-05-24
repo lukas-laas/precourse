@@ -62,5 +62,9 @@ describe("developer API should have endpoints to", () => {
             .expect(200, done)
     })
 
-    //TODO: add test for delete
+    it("delete developer", function (done) {
+        request(api.app)
+            .delete("/api/developers/1")
+            .expect(200, done)
+    })
 })
