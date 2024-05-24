@@ -25,4 +25,22 @@ describe("developer API should have endpoints to", () => {
             })
             .expect(200, done)
     })
+
+    it("post developer", function (done) {
+        const dev = {
+            name: "bongo",
+            email: "trumma"
+        }
+
+        request(api.app)
+            .post("/api/developers/")
+            .set("Accept", "application/json")
+            .send(dev)
+            .expect("Content-Type", /json/)
+            .expect('location', /\/api\/developers\//)
+            .expect((res) => {
+                assert.strictEqual(res.body.name, "bongo")
+            })
+            .expect(201, done)
+    })
 })
