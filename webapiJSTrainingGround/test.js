@@ -43,4 +43,24 @@ describe("developer API should have endpoints to", () => {
             })
             .expect(201, done)
     })
+
+    it("update developer", function (done) {
+        const dev = {
+            name: "bongo",
+            email: "trumma"
+        }
+
+        request(api.app)
+            .patch("/api/developers/1")
+            .set("Accept", "application/json")
+            .send(dev)
+            .expect("Content-Type", /json/)
+            .expect('location', /\/api\/developers\/1/)
+            .expect((res) => {
+                assert.strictEqual(res.body.name, "bongo")
+            })
+            .expect(200, done)
+    })
+
+    //TODO: add test for delete
 })
